@@ -1,0 +1,65 @@
+digraph{
+
+# Graph style
+"ordering"="out"
+"rankdir"="TD"
+
+#########
+# Nodes #
+#########
+
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" ["color"="black", "label"="Add", "shape"="ellipse"];
+"Symbol('q_0', real=True, nonnegative=True)_(0,)" ["color"="black", "label"="q_0", "shape"="ellipse"];
+"Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(1,)" ["color"="black", "label"="Mul", "shape"="ellipse"];
+"Symbol('q_1', real=True, nonnegative=True)_(1, 0)" ["color"="black", "label"="q_1", "shape"="ellipse"];
+"Symbol('a', real=True, positive=True)_(1, 1)" ["color"="black", "label"="a", "shape"="ellipse"];
+"Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(2,)" ["color"="black", "label"="Mul", "shape"="ellipse"];
+"Symbol('q_2', real=True, nonnegative=True)_(2, 0)" ["color"="black", "label"="q_2", "shape"="ellipse"];
+"Symbol('a', real=True, positive=True)_(2, 1)" ["color"="black", "label"="a", "shape"="ellipse"];
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2)))_(3,)" ["color"="black", "label"="Mul", "shape"="ellipse"];
+"Rational(-1, 2)_(3, 0)" ["color"="black", "label"="-1/2", "shape"="ellipse"];
+"Symbol('b', real=True, positive=True)_(3, 1)" ["color"="black", "label"="b", "shape"="ellipse"];
+"Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))_(3, 2)" ["color"="black", "label"="Pow", "shape"="ellipse"];
+"Symbol('q_1', real=True, nonnegative=True)_(3, 2, 0)" ["color"="black", "label"="q_1", "shape"="ellipse"];
+"Integer(2)_(3, 2, 1)" ["color"="black", "label"="2", "shape"="ellipse"];
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2)))_(4,)" ["color"="black", "label"="Mul", "shape"="ellipse"];
+"Rational(-1, 2)_(4, 0)" ["color"="black", "label"="-1/2", "shape"="ellipse"];
+"Symbol('b', real=True, positive=True)_(4, 1)" ["color"="black", "label"="b", "shape"="ellipse"];
+"Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))_(4, 2)" ["color"="black", "label"="Pow", "shape"="ellipse"];
+"Symbol('q_2', real=True, nonnegative=True)_(4, 2, 0)" ["color"="black", "label"="q_2", "shape"="ellipse"];
+"Integer(2)_(4, 2, 1)" ["color"="black", "label"="2", "shape"="ellipse"];
+"Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)" ["color"="black", "label"="Mul", "shape"="ellipse"];
+"Integer(-1)_(5, 0)" ["color"="black", "label"="-1", "shape"="ellipse"];
+"Symbol('d', real=True, nonzero=True)_(5, 1)" ["color"="black", "label"="d", "shape"="ellipse"];
+"Symbol('q_1', real=True, nonnegative=True)_(5, 2)" ["color"="black", "label"="q_1", "shape"="ellipse"];
+"Symbol('q_2', real=True, nonnegative=True)_(5, 3)" ["color"="black", "label"="q_2", "shape"="ellipse"];
+
+#########
+# Edges #
+#########
+
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Symbol('q_0', real=True, nonnegative=True)_(0,)";
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(1,)";
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(2,)";
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2)))_(3,)";
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2)))_(4,)";
+"Add(Symbol('q_0', real=True, nonnegative=True), Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True)), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))), Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))), Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True)))_()" -> "Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)";
+"Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(1,)" -> "Symbol('q_1', real=True, nonnegative=True)_(1, 0)";
+"Mul(Symbol('q_1', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(1,)" -> "Symbol('a', real=True, positive=True)_(1, 1)";
+"Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(2,)" -> "Symbol('q_2', real=True, nonnegative=True)_(2, 0)";
+"Mul(Symbol('q_2', real=True, nonnegative=True), Symbol('a', real=True, positive=True))_(2,)" -> "Symbol('a', real=True, positive=True)_(2, 1)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2)))_(3,)" -> "Rational(-1, 2)_(3, 0)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2)))_(3,)" -> "Symbol('b', real=True, positive=True)_(3, 1)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2)))_(3,)" -> "Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))_(3, 2)";
+"Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))_(3, 2)" -> "Symbol('q_1', real=True, nonnegative=True)_(3, 2, 0)";
+"Pow(Symbol('q_1', real=True, nonnegative=True), Integer(2))_(3, 2)" -> "Integer(2)_(3, 2, 1)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2)))_(4,)" -> "Rational(-1, 2)_(4, 0)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2)))_(4,)" -> "Symbol('b', real=True, positive=True)_(4, 1)";
+"Mul(Rational(-1, 2), Symbol('b', real=True, positive=True), Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2)))_(4,)" -> "Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))_(4, 2)";
+"Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))_(4, 2)" -> "Symbol('q_2', real=True, nonnegative=True)_(4, 2, 0)";
+"Pow(Symbol('q_2', real=True, nonnegative=True), Integer(2))_(4, 2)" -> "Integer(2)_(4, 2, 1)";
+"Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)" -> "Integer(-1)_(5, 0)";
+"Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)" -> "Symbol('d', real=True, nonzero=True)_(5, 1)";
+"Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)" -> "Symbol('q_1', real=True, nonnegative=True)_(5, 2)";
+"Mul(Integer(-1), Symbol('d', real=True, nonzero=True), Symbol('q_1', real=True, nonnegative=True), Symbol('q_2', real=True, nonnegative=True))_(5,)" -> "Symbol('q_2', real=True, nonnegative=True)_(5, 3)";
+}
