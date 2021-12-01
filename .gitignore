@@ -1,3 +1,8 @@
 projet.rst
 notes.rst
 .ipynb_checkpoints
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
