@@ -1,0 +1,181 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{a4wide}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{stmaryrd}
+
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[notref]{showkeys}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{0.95 \columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newtheorem{exercice}{Exercice}
+\newtheorem{question}{Question}
+
+\title{Python pour le MECEN 2021}
+\author{}
+
+\begin{document}
+\maketitle
+
+\section{Du côté du consommateur}%
+\label{sec:du_cote_du_consommateur}
+
+\paragraph{Fonction d'utilité.} On se donne des paramètres réels $a>0$ et $b > |d| > 0$.
+On introduit maintenant la fonction d'utilité $U: \mathbb{R}^3 \mapsto \mathbb{R}$ par
+\begin{equation} \label{eq:1}
+    \forall (q_0, q_1, q_2) \in \mathbb{R}^3,\quad U(q_0, q_1, q_2):= q_0 + a (q_1 + q_2) - \frac{bq_1^2+bq_2^2+2dq_1q_2}{2}.
+\end{equation}
+Ici $q_0, q_1, q_2$ sont les quantitées consommées de trois bien (de type 0, 1 et 2).
+
+\begin{question}
+    On pourra chercher à dessiner les ensembles de niveaux de $U$ avec des sliders pour ajuster les valeurs des paramètres.
+\end{question}
+
+\paragraph{Contrainte sur le revenu.} On considère $p_1$  et $p_2$  des réels positifs correspondant au prix unitaire des biens de type 1 et 2.
+On se donne également un réel positif $R$ représentant le revenu global du consommateur.
+
+\paragraph{Prise de décision rationnelle.} La répartition de consommation la plus avantageuse est alors la solution du programme suivant.
+\begin{equation} \label{eq:2}
+    \begin{cases}
+        \argmax u(q_0, q_1, q_2),\\
+        q_0, q_1, q_2 \geq 0,\\
+        q_0 + p_1 q_1 + p_2q_2 \leq R.
+    \end{cases}
+\end{equation}
+
+\begin{question}
+    On pourra reprendre la visualisation précédente pour ajouter le tétraédre de contrainte et des sliders correspondant aux nouveaux paramètres.
+\end{question}
+
+\begin{question}
+    Montrer que le programme précédent permet de définir génériquement $\tilde{q_0},\tilde{q_1}, \tilde{q_2}$ des fonctions des prix unitaires $p_1, p_2$.
+\end{question}
+
+\begin{question}
+    Faites une visualisation des graphes des trois fonctions avec des sliders représentant les paramètres.
+\end{question}
+
+\begin{question}
+    Déterminer des hypothèses sous lesquelles on peut transformer le système 
+    \begin{equation} \label{eq:3}
+        \begin{cases}
+            \tilde{q_0}(p_1, p_2) = q_0,\\
+            \tilde{q_1}(p_1, p_2) = q_1,\\
+            \tilde{q_2}(p_1, p_2) = q_2,
+        \end{cases}
+    \end{equation}
+    en 
+    \begin{equation}
+        \begin{cases}
+            \tilde{p_1}(q_0, q_1, q_2)=p_1,\\
+            \tilde{p_2}(q_0, q_1, q_2)=p_2.
+        \end{cases}
+    \end{equation}
+\end{question}
+\section{Concurrence en prix}%
+\label{sec:concurrence_en_prix}
+
+\paragraph{Description de l'économie.} Dans cette économie, il y a deux entreprises.
+\begin{itemize}
+    \item[$\bullet$] L'entreprise 1 produit des produits de type 1 au cout unitaire de revient $c_1>0$ et le vend au prix unitaire $p_1$.
+    \item[$\bullet$] L'entreprise 2 produit des produits de type 2 au cout unitaire de revient $c_2>0$ et le vend au prix unitaire $p_2$.
+\end{itemize}
+
+\paragraph{Profits.}On a alors les niveaux de profits de chaque entreprise donnée par les fonctions
+\begin{equation} \label{eq:6}
+    \forall (p_1, p_2)\in \mathbb{R}_+^2,\quad\Pi_1(p_1, p_2):= (p_1 - c_1) \tilde{q_1}(p_1, p_2),
+\end{equation}
+et
+\begin{equation} \label{eq:7}
+    \forall (p_1, p_2)\in \mathbb{R}_+^2,\quad\Pi_2(p_1, p_2):= (p_2 - c_2) \tilde{q_2}(p_1, p_2).
+\end{equation}
+\paragraph{Décision rationnelle} Chaque entreprise cherchant à maximiser son profit cherche à résoudre le programme 
+\begin{equation} \label{eq:4}
+    \begin{cases}
+        \argmax \Pi_1(p_1),\\
+        p_1\geq 0.
+    \end{cases}
+\end{equation}
+\begin{equation} \label{eq:5}
+    \begin{cases}
+        \argmax \Pi_2(p_2),\\
+        p_2\geq 0.
+    \end{cases}
+\end{equation}
+
+\begin{question}
+    Montrer que les programmes précédents fournissent des fonctions de réactions $r_1$ au prix $p_2$ (resp. $r_2$ au prix $p_1$).
+\end{question}
+
+\begin{question}
+    Montre qu'il existe un équilibre de Nash $(p^*_1, p^*_2)$  solution de 
+    \begin{equation} \label{eq:8}
+        \begin{cases}
+            r_1(p^*_2)=p^*_1,\\
+            r_2(p^*_1)=p^*_2.
+        \end{cases}
+    \end{equation}
+\end{question}
+
+\begin{question}
+    Visualiser les courbes de réactions (et donc les équilibres de Nash qui sont les intersections) avec des sliders permettant de déterminer les paramètres.
+\end{question}
+\section{Concurrence en quantité}%
+\label{sec:concurrence_en_quantite}
+
+Les variables de décision des entreprises sont maintenant les quantités produites $q_1, q_2$.
+On obtient donc des problèmes
+\begin{equation} \label{eq:9}
+    \begin{cases}
+        \argmax \tilde{p_1}(q_0, q_1, q_2) q_1 - c_1 q_1,\\
+        q_1 \geq 0
+    \end{cases}
+\end{equation}
+et 
+\begin{equation} \label{eq:10}
+    \begin{cases}
+        \argmax \tilde{p_2}(q_0, q_1, q_2) q_2 - c_2 q_2,\\
+        q_2 \geq 0
+    \end{cases}
+\end{equation}
+\begin{question}
+Montrer que les programmes fournissent des fonctions de réactions $s_1$ à la quantité produite $q_2$ (resp. $s_2$ à $q_1$).
+\end{question}
+
+\begin{question}
+    Montre qu'il existe un équilibre de Nash $(q_1^*, q_2^*)$ solution de 
+    \begin{equation} \label{eq:11}
+        \begin{cases}
+            s_1(q_2^*)=q_1^*,\\
+            s_2(q_1^*)=q_2^*.
+        \end{cases}
+    \end{equation}
+\end{question}
+
+\begin{question}
+    Visualiser les courbes de réactions (et donc les équilibres de Nash qui sont les intersections) avec des sliders permettant de déterminer les paramètres.
+\end{question}
+\end{document}
