@@ -28,20 +28,19 @@ class Probleme:
             raise ValueError("les coefficients hors d doivent être positifs.")
         if self.b <= abs(self.d):
             raise ValueError("on doit avoir |d| < b.")
-        self._gen_symbolique()
-        self._gen_svg()
+        self._init_symboles()
+        self._init_svg_formule()
 
-    def _gen_symbolique(self):
-        (
-            self.sa,
-            self.sb,
-            self.sd,
-            self.sR,
-            self.sp1,
-            self.sp2,
-            self.sq1,
-            self.sq2,
-        ) = sp.symbols("a b d R p_1 p_2 q_1 q_2")
+    def _init_symboles(self):
+        """Initialise les différentes expressions utiles."""
+        self.sa = sp.Symbol("a")
+        self.sb = sp.Symbol("b")
+        self.sd = sp.Symbol("d")
+        self.sR = sp.Symbol("R")
+        self.sp1 = sp.Symbol("p_1")
+        self.sp2 = sp.Symbol("p_2")
+        self.sq1 = sp.Symbol("q_1")
+        self.sq2 = sp.Symbol("q_2")
         self.sU = (
             self.sR
             + self.sq1 * (self.sa - self.sp1)
@@ -54,16 +53,17 @@ class Probleme:
             / 2
         )
 
-    def _gen_svg(self):
+    def _init_svg_formule(self):
         u = sp.latex(self.sU)
         pdf = latextools.render_snippet(f"$\\max U={u}$")
         pdf.as_svg().as_drawing(scale=2).saveSvg("assets/utilite.svg")
 
-    def _point_critique(self):
-
+    def _calcule_point_critique(self) -> tuple[float, float]:
         solution = sp.solve(
             [self.sU.diff(self.sq1), self.sU.diff(self.sq2)], [self.sq1, self.sq2]
         )
+        sol_q1 = solution[self.sq1]
+        sol_q2 = solution[self.sq2]
         substitutions = {
             self.sa: self.a,
             self.sb: self.b,
@@ -72,11 +72,12 @@ class Probleme:
             self.sp1: self.p1,
             self.sp2: self.p2,
         }
-        q1 = solution[self.sq1].subs(substitutions)
-        q2 = solution[self.sq2].subs(substitutions)
+        q1 = sol_q1.subs(substitutions)
+        q2 = sol_q2.subs(substitutions)
         return float(q1), float(q2)
 
     def utilite(self, x):
+        """Fonction d'utilite numérique à maximiser."""
         q1, q2 = x
         return (
             self.R
@@ -86,10 +87,11 @@ class Probleme:
         )
 
     def contrainte(self, x):
+        """Fonction de contrainte numérique qui doit rester positive."""
         q1, q2 = x
         return self.R - q1 * self.p1 - q2 * self.p2
 
-    def echantillon(self):
+    def _echantillonne(self):
         q1s = np.linspace(0, self.R / self.p1, 100)
         q2s = np.linspace(0, self.R / self.p2, 100)
         Q1, Q2 = np.meshgrid(q1s, q2s)
@@ -99,7 +101,7 @@ class Probleme:
         return q1s, q2s, U
 
     def genere_contour(self):
-        Q1, Q2, U = p.echantillon()
+        Q1, Q2, U = probleme._echantillonne()
         try:
             M = np.nanmax(U)
         except TypeError:
@@ -107,7 +109,7 @@ class Probleme:
         return go.Contour(x=Q1, y=Q2, z=U, contours=dict(start=0, end=M))
 
     def genere_max(self):
-        q1, q2 = self._point_critique()
+        q1, q2 = self._calcule_point_critique()
         return go.Scatter(
             x=[q1],
             y=[q2],
@@ -125,96 +127,62 @@ class Probleme:
         )
 
 
+def genere_slider(parametre: str, valeur: float) -> html.Div:
+    if parametre == "d":
+        m = -5
+        M = 5
+    else:
+        m = 1
+        M = 10
+    return html.Div(
+        children=[
+            html.Label(
+                f"{parametre}={probleme.a}",
+                id=f"affichage_{parametre}",
+                style={"textAlign": "center"},
+            ),
+            dcc.Slider(id=parametre, value=valeur, min=m, max=M, step=0.2),
+        ]
+    )
+
+
+def genere_apparence(app, probleme) -> html.Div:
+    return html.Div(
+        children=[
+            html.H1(
+                "Prise de décision du consommateur",
+                id="Titre",
+                style={"textAlign": "center"},
+            ),
+            html.Div(
+                html.Img(src=app.get_asset_url("utilite.svg")),
+                id="Formule",
+                style=dict(textAlign="center"),
+            ),
+            html.Div(
+                children=[
+                    html.Div(
+                        children=[
+                            genere_slider(parametre="a", valeur=probleme.a),
+                            genere_slider(parametre="b", valeur=probleme.b),
+                            genere_slider(parametre="d", valeur=probleme.d),
+                            genere_slider(parametre="R", valeur=probleme.R),
+                            genere_slider(parametre="p1", valeur=probleme.p1),
+                            genere_slider(parametre="p2", valeur=probleme.p2),
+                        ],
+                        style={"flex": 1},
+                    ),
+                    dcc.Graph(id="Figure", figure=probleme.genere_figure()),
+                ],
+                style={"display": "flex", "flex-direction": "row"},
+            ),
+        ]
+    )
+
+
 app = dash.Dash()
-p = Probleme()
-app.layout = html.Div(
-    children=[
-        html.H1(
-            "Prise de décision du consommateur",
-            id="Titre",
-            style={"textAlign": "center"},
-        ),
-        html.Div(
-            html.Img(src=app.get_asset_url("utilite.svg")),
-            style=dict(textAlign="center"),
-        ),
-        html.Div(
-            children=[
-                html.Div(
-                    children=[
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"a={p.a}",
-                                    id="affichage_a",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(id="a", value=p.a, min=1, max=10, step=0.5),
-                            ]
-                        ),
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"b={p.b}",
-                                    id="affichage_b",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(id="b", value=p.b, min=1, max=10, step=0.5),
-                            ]
-                        ),
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"d={p.d}",
-                                    id="affichage_d",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(id="d", value=p.d, min=-1, max=1, step=0.1),
-                            ]
-                        ),
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"R={p.R}",
-                                    id="affichage_R",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(id="R", value=p.R, min=1, max=10, step=0.5),
-                            ]
-                        ),
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"p1={p.p1}",
-                                    id="affichage_p1",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(
-                                    id="p1", value=p.p1, min=0.05, max=1, step=0.05
-                                ),
-                            ]
-                        ),
-                        html.Div(
-                            children=[
-                                html.Label(
-                                    f"p2={p.p2}",
-                                    id="affichage_p2",
-                                    style={"textAlign": "center"},
-                                ),
-                                dcc.Slider(
-                                    id="p2", value=p.p2, min=0.05, max=1, step=0.05
-                                ),
-                            ]
-                        ),
-                    ],
-                    style={"flex": 1},
-                ),
-                dcc.Graph(id="Figure", figure=p.genere_figure()),
-            ],
-            style={"display": "flex", "flex-direction": "row"},
-        ),
-    ]
-)
+probleme = Probleme()
+app.layout = genere_apparence(app, probleme)
 
 
 @app.callback(
@@ -237,20 +205,20 @@ app.layout = html.Div(
     ],
 )
 def mise_a_jour(a, b, d, R, p1, p2):
-    p.a = a
-    p.b = b
-    p.d = d
-    p.R = R
-    p.p1 = p1
-    p.p2 = p2
+    probleme.a = a
+    probleme.b = b
+    probleme.d = d
+    probleme.R = R
+    probleme.p1 = p1
+    probleme.p2 = p2
     return (
-        p.genere_figure(),
-        f"a={p.a}",
-        f"b={p.b}",
-        f"d={p.d}",
-        f"R={p.R}",
-        f"p1={p.p1}",
-        f"p2={p.p2}",
+        probleme.genere_figure(),
+        f"a={probleme.a}",
+        f"b={probleme.b}",
+        f"d={probleme.d}",
+        f"R={probleme.R}",
+        f"p1={probleme.p1}",
+        f"p2={probleme.p2}",
     )
 
 
