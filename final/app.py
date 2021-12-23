@@ -5,6 +5,7 @@
 Dashboard pour la visualisation d'un problème de concurrence.
 """
 import latextools
+from pathlib import Path
 import numpy as np
 import plotly.graph_objects as go
 import sympy as sp
@@ -54,9 +55,10 @@ class Probleme:
         )
 
     def _init_svg_formule(self):
-        u = sp.latex(self.sU)
-        pdf = latextools.render_snippet(f"$\\max U={u}$")
-        pdf.as_svg().as_drawing(scale=2).saveSvg("assets/utilite.svg")
+        if not Path("assets/utilite.svg").exists():
+            u = sp.latex(self.sU)
+            pdf = latextools.render_snippet(f"$\\max U={u}$")
+            pdf.as_svg().as_drawing(scale=2).saveSvg("assets/utilite.svg")
 
     def _calcule_point_critique(self) -> tuple[float, float]:
         solution = sp.solve(
